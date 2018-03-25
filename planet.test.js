@@ -1,12 +1,9 @@
-const Planet = require('./planet');
+import { Expedition } from './app';
 
-// test('adds 1 + 2 to equal 3', () => {
-//   expect(sum(1, 2)).toBe(3);
-// });
 describe('Planet', () => {
   describe('when recieving new input', () => {
     let input
-    let planet
+    let expedition
     beforeEach(()=> {
       input = `
         53
@@ -14,19 +11,23 @@ describe('Planet', () => {
         32N FRRFLLFFRRFLL
         03W LLFFFLFLFL
       `
-      planet = new Planet(input)
+      expedition = new Expedition(input)
     })
 
     it('should exist', () => {
-      expect(planet).not.toBeFalsy();
+      expect(expedition.planet).not.toBeFalsy();
     })
 
     it('should have a width', () => {
-      expect(planet.width).not.toBeUndefined()
+      expect(expedition.planet.width).not.toBeUndefined()
     })
 
     it('should have a height', () => {
-      expect(planet.height).not.toBeUndefined()
+      expect(expedition.planet.height).not.toBeUndefined()
+    })
+
+    it ('should give the planet an accurate size', () => {
+      expect(expedition.planet).toMatchObject({width: 6, height: 4})
     })
 
   })
