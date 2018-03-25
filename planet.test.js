@@ -1,17 +1,11 @@
 import { Expedition } from './app';
+import { sample } from './testSamples'
 
 describe('Planet', () => {
   describe('when recieving new input', () => {
-    let input
     let expedition
     beforeEach(()=> {
-      input = `
-        53
-        11E RFRFRFRF
-        32N FRRFLLFFRRFLL
-        03W LLFFFLFLFL
-      `
-      expedition = new Expedition(input)
+      expedition = new Expedition(sample.input)
     })
 
     it('should exist', () => {
