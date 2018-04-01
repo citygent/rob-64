@@ -3,29 +3,43 @@ const getCoordinates = require('./helpers').getCoordinates
 module.exports = class Robot {
   
   constructor(mission) {
-    this.COMMANDS = ['F', 'L', 'R']
     this.BEARINGS = ['N', 'E', 'S', 'W']
+    this.commands = {
+      'F': () => this.moveForward(),
+    }
     this.position = this.determinePosition(mission.start)
     this.mission = mission.assignment.split('').filter(Boolean)
   }
 
-  // This is clearly the class we should have started with.
-  
-  // Try to stick with ES6 instead of RX and use Generators and Iterators to get a robot
-  // to perform its mission in order to get expedition to wait for a robot to complete
-  // its missions one way or another before sending off another robot.
-
-  // Would also like to set up some kind of behaviour subject for Scents and other robots
-  // so that a robot has somewhere to check if the next square she moves into is either offworld
-  // or another robot she is gonna crash into.
-
-  *startMission(mission = this.mission) {
-    mission.forEach(command => {
-      if (this.COMMANDS.some(cmd => cmd === command.toUpperCase())) {
-        yield executeCommand(command)
+  startMission(override) {
+    const tasks = override || this.mission
+    tasks.forEach(task => {
+      if (Object.keys(this.commands).some(command => command === task)) {
+        this.commands[task]();
       }
     })
   }
+  
+  moveForward() {
+    let { orientation, x, y } = this.position
+
+    switch (orientation) {
+      case 'N':
+        y++
+        break;
+      case 'E':
+        x++
+        break;
+      case 'S':
+        y--
+        break;
+      case 'W':
+        x--
+        break;
+    }
+    this.position = { orientation, x, y }
+  }
+
 
   determinePosition(landingSite) {
     const orientations = landingSite.match(new RegExp(this.BEARINGS.join('|')))

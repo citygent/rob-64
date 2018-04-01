@@ -35,7 +35,7 @@ describe('Robot', () => {
     })
 
     it('should know how to move forward', () => {
-      robot.startMission('F')
+      robot.startMission(['F'])
       expect(robot.position).toMatchObject({'x':3, 'y':3, 'orientation': 'N'})
     })
 
