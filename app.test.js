@@ -1,5 +1,5 @@
-import { Expedition } from './app'
-import { sample } from './testSamples'
+const Expedition = require('./app')
+const sample = require('./testSamples');
 
 describe('Expedition', () => {
   describe('when recieving new input', () => {

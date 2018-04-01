@@ -1,6 +1,6 @@
-import { getCoordinates } from './helpers'
+const getCoordinates = require('./helpers').getCoordinates
 
-export class Robot {
+module.exports = class Robot {
   
   constructor(mission) {
     this.COMMANDS = ['F', 'L', 'R']

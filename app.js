@@ -1,7 +1,7 @@
-import Planet from './Planet'
-import { getCoordinates } from './helpers'
+const Planet = require('./Planet')
+const getCoordinates = require('./helpers').getCoordinates
 
-export class Expedition {
+module.exports = class Expedition {
   constructor(input) {
     this.instructions = this.getInstructions(input);
     this.planet = this.getPlanet(this.instructions);

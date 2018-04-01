@@ -1,7 +1,6 @@
-import { Expedition } from './app';
-import { Robot } from './robot';
-
-import { sample } from './testSamples'
+const Expedition = require('./app');
+const Robot = require('./robot');
+const sample = require('./testSamples');
 
 describe('Robot', () => {
   describe('when recieving new input', () => {

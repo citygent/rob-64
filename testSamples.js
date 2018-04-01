@@ -1,4 +1,4 @@
-export const sample = {
+module.exports = {
   input: `
     5 3
     1 1 E
