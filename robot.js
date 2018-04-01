@@ -3,7 +3,6 @@ const getCoordinates = require('./helpers').getCoordinates
 module.exports = class Robot {
   
   constructor(mission) {
-    this.BEARINGS = ['N', 'E', 'S', 'W']
     this.commands = {
       'F': () => this.moveForward(),
       'L': () => this.turnLeft(),
@@ -20,7 +19,7 @@ module.exports = class Robot {
       }
     })
   }
-  
+
   moveForward() {
     let { orientation, x, y } = this.position
 
@@ -42,15 +41,19 @@ module.exports = class Robot {
   }
 
   turnLeft() {
-    const orientation = this.BEARINGS[this.BEARINGS.indexOf(this.position.orientation) -1 ] || this.BEARINGS[this.BEARINGS.length -1 ]
-    this.position.orientation = orientation
+    const leftMap = {
+      'N': 'W',
+      'E': 'N',
+      'S': 'E',
+      'W': 'S',
+    }
+
+    this.position.orientation = leftMap[this.position.orientation]
   }
 
-  determinePosition(landingSite) {
-    const orientations = landingSite.match(new RegExp(this.BEARINGS.join('|')))
-    const orientation = orientations && orientations.pop()
-    let coordinates = getCoordinates(landingSite.match(/\d+/g).map(Number))
-
-    return Object.assign({}, coordinates, { orientation })
+  determinePosition(positionString) {
+    const validBearings = ['N', 'E', 'S', 'W']
+    const [ x, y, orientation ] = positionString.split(' ').map(ct => Number(ct) || (validBearings.indexOf(ct) !== -1 ? ct : null) )
+    return { x, y, orientation }
   }
 }
