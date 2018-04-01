@@ -6,6 +6,7 @@ module.exports = class Robot {
     this.BEARINGS = ['N', 'E', 'S', 'W']
     this.commands = {
       'F': () => this.moveForward(),
+      'L': () => this.turnLeft(),
     }
     this.position = this.determinePosition(mission.start)
     this.mission = mission.assignment.split('').filter(Boolean)
@@ -40,6 +41,10 @@ module.exports = class Robot {
     this.position = { orientation, x, y }
   }
 
+  turnLeft() {
+    const orientation = this.BEARINGS[this.BEARINGS.indexOf(this.position.orientation) -1 ] || this.BEARINGS[this.BEARINGS.length -1 ]
+    this.position.orientation = orientation
+  }
 
   determinePosition(landingSite) {
     const orientations = landingSite.match(new RegExp(this.BEARINGS.join('|')))
