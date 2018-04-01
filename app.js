@@ -6,6 +6,7 @@ module.exports = class Expedition {
     this.instructions = this.getInstructions(input);
     this.planet = this.getPlanet(this.instructions);
     this.robotMissions = this.getMissions(this.instructions)
+    console.log(this.robotMissions)
   }
 
   getInstructions(input) {
@@ -15,7 +16,6 @@ module.exports = class Expedition {
                           .map(instruction => instruction.trim())
                           .filter(Boolean)
     }
-    // console.log(instructions)
     return instructions
   }
 
@@ -39,6 +39,4 @@ module.exports = class Expedition {
       }
     ))
   }
-
 }
-

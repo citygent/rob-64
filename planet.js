@@ -7,6 +7,10 @@ class Planet {
       this.gridRows.push(new Array(this.maxX + 1))
     }
   }
+
+  markScent({ x, y, orientation }) {
+    this.gridRows[x][y] = { lost: true, direction: orientation }
+  }
 }
 
 module.exports = Planet

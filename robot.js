@@ -9,53 +9,48 @@ module.exports = class Robot {
     this.position = this.determinePosition(mission.start)
     this.mission = mission.assignment.split('').filter(Boolean)
     this.terrain = mission.terrain
+    this.lastPosition = this.position
   }
 
   startMission(override) {
     const tasks = override || this.mission
-    tasks.forEach(task => {
-      if (Object.keys(this.commands).some(command => command === task)) {
-        this.commands[task]();
+
+    for(const task of tasks) {
+      const validCommand = Object.keys(this.commands).some(command => command === task)
+      if (validCommand) {
+        console.log(`${this.lastPosition.x} ${this.lastPosition.y} ${this.lastPosition.orientation} ${this.position.lost ? 'LOST' : ''}`)
+        this.commands[task]()
+        if (this.robotStillOnline()) {
+          this.lastPosition = this.position
+          continue;
+        } else {
+          this.lastPosition.lost = true
+          this.position.lost = true
+          // still convinced marking robots position as somewhere they were _before_ they got lost is a bit silly.
+          // but I guess this is why I'm not working at NASA or SpaceX ;_;
+          this.terrain.markScent(this.lastPosition)
+        }
       }
-    })
+    }
+    this.output = `${this.lastPosition.x} ${this.lastPosition.y} ${this.lastPosition.orientation} ${this.position.lost ? 'LOST' : ''}`
   }
 
   moveForward() {
     let { orientation, x, y, lost } = this.position
-    const lostV = (vc) => (vc < 0 || vc > this.terrain.maxY)
-    const lostH = (hc) => (hc < 0 || hc > this.terrain.maxX)
 
-    if (!lost) {
-      switch (orientation) {
-        case 'N':
-          if (! lostV(y + 1)) {
-            y++
-          } else {
-            lost = true
-          }
-          break;
-        case 'E':
-          if (! lostH(x + 1)) {
-            x++
-          } else {
-            lost = true
-          }
-          break;
-        case 'S':
-          if (! lostV(y - 1)) { 
-            y--
-          } else {
-            lost = true
-          }
-          break;
-        case 'W':
-          if (! lostH(x - 1)) {
-            x--
-          } else {
-            lost = true
-          }
-          break;
-      }
+    switch (orientation) {
+      case 'N':
+        y++
+        break;
+      case 'E':
+        x++
+        break;
+      case 'S':
+        y--
+        break;
+      case 'W':
+        x--
+        break;
     }
     this.position = { orientation, x, y, lost }
   }
@@ -82,7 +77,23 @@ module.exports = class Robot {
 
   determinePosition(positionString) {
     const validBearings = ['N', 'E', 'S', 'W']
-    const [ x, y, orientation ] = positionString.split(' ').map(ct => Number(ct) || (validBearings.indexOf(ct) !== -1 ? ct : null) )
+    const [ x, y, orientation ] = positionString.split(' ').map(ct => validBearings.indexOf(ct) !== -1 ? ct : Number(ct))
     return { x, y, orientation }
+  }
+
+  robotOnTerrain({x, y}) {
+    const lostVertically = (y < 0 || y > this.terrain.maxY)
+    const lostHorizontally = (x < 0 || x > this.terrain.maxX)
+
+    return (!lostVertically && !lostHorizontally)
+  }
+
+  robotStillOnline() {
+    if (this.robotOnTerrain(this.position)) { 
+      return true
+    } else {
+
+      return false
+    }
   }
 }
