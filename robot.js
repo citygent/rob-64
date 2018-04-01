@@ -18,7 +18,6 @@ module.exports = class Robot {
     for(const task of tasks) {
       const validCommand = Object.keys(this.commands).some(command => command === task)
       if (validCommand) {
-        console.log(`${this.lastPosition.x} ${this.lastPosition.y} ${this.lastPosition.orientation} ${this.position.lost ? 'LOST' : ''}`)
         this.commands[task]()
         if (this.robotStillOnline()) {
           this.lastPosition = this.position

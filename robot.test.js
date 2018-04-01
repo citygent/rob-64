@@ -81,13 +81,13 @@ describe('Robot', () => {
       expect(expedition.planet.gridRows[3][3]).toMatchObject({ lost: true, direction: "N" })
     })
 
-    it.only('should output a final position and status to the expedition team', () => {
-      // robot0 = new Robot(expedition.robotMissions[0])
-      // robot0.startMission()
-      // expect(robot0.output).toContain("1 1 E")
+    it('should output a final position and status to the expedition team', () => {
+      robot0 = new Robot(expedition.robotMissions[0])
+      robot0.startMission()
+      expect(robot0.output).toContain("1 1 E")
 
-      // robot.startMission()
-      // expect(robot.output).toContain("3 3 N LOST")
+      robot.startMission()
+      expect(robot.output).toContain("3 3 N LOST")
 
       robot2 = new Robot(expedition.robotMissions[2])
       robot2.startMission()
