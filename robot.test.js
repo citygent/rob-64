@@ -62,5 +62,12 @@ describe('Robot', () => {
       )
     })
 
+    it(`should know when it's lost`, () => {
+      robot.startMission()
+      expect(robot.position).toMatchObject(
+        { lost: true }
+      )
+    })
+
   })
 })

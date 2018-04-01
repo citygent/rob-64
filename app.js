@@ -32,7 +32,8 @@ module.exports = class Expedition {
         accumulator.push(array.slice(index, index + 2));
       return accumulator;
     }, []).map(arr => (
-      {
+      { 
+        terrain: this.planet,
         start: arr[0], 
         assignment: arr[1]
       }

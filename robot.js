@@ -8,6 +8,7 @@ module.exports = class Robot {
     }
     this.position = this.determinePosition(mission.start)
     this.mission = mission.assignment.split('').filter(Boolean)
+    this.terrain = mission.terrain
   }
 
   startMission(override) {
