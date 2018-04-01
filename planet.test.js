@@ -13,15 +13,15 @@ describe('Planet', () => {
     })
 
     it('should have a width', () => {
-      expect(expedition.planet.width).not.toBeUndefined()
+      expect(expedition.planet.maxX).not.toBeUndefined()
     })
 
     it('should have a height', () => {
-      expect(expedition.planet.height).not.toBeUndefined()
+      expect(expedition.planet.maxY).not.toBeUndefined()
     })
 
     it ('should give the planet an accurate size', () => {
-      expect(expedition.planet).toMatchObject({width: 6, height: 4})
+      expect(expedition.planet).toMatchObject({maxX: 5, maxY: 3})
     })
 
   })
