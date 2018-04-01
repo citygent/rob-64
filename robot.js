@@ -22,24 +22,42 @@ module.exports = class Robot {
 
   moveForward() {
     let { orientation, x, y, lost } = this.position
+    const lostV = (vc) => (vc < 0 || vc > this.terrain.maxY)
+    const lostH = (hc) => (hc < 0 || hc > this.terrain.maxX)
+
     if (!lost) {
       switch (orientation) {
         case 'N':
-          y++
+          if (! lostV(y + 1)) {
+            y++
+          } else {
+            lost = true
+          }
           break;
         case 'E':
-          x++
+          if (! lostH(x + 1)) {
+            x++
+          } else {
+            lost = true
+          }
           break;
         case 'S':
-          y--
+          if (! lostV(y - 1)) { 
+            y--
+          } else {
+            lost = true
+          }
           break;
         case 'W':
-          x--
+          if (! lostH(x - 1)) {
+            x--
+          } else {
+            lost = true
+          }
           break;
       }
-      lost = x > this.terrain.maxX || y > this.terrain.maxY
-      this.position = { orientation, x, y, lost }
     }
+    this.position = { orientation, x, y, lost }
   }
 
   turnLeft() {

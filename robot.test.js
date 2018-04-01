@@ -69,5 +69,12 @@ describe('Robot', () => {
       )
     })
 
+    it(`should report the last position it was at BEFORE it got lost`, () => {
+      robot.startMission()
+      expect(robot.position).toMatchObject(
+        { x: 3, y: 3, orientation: "N", lost: true }
+      )
+    })
+
   })
 })
