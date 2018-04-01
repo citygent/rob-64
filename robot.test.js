@@ -42,8 +42,18 @@ describe('Robot', () => {
     it('should know how to turn left', () => {
       robot.startMission(['L'])
       expect(robot.position).toMatchObject({'x':3, 'y':2, 'orientation': 'W'})
+      robot.turnLeft()
+      expect(robot.position).toMatchObject({'x':3, 'y':2, 'orientation': 'S'})
     })
 
+    it('should know how to turn right', () => {
+      robot.startMission(['R'])
+      expect(robot.position).toMatchObject({'x':3, 'y':2, 'orientation': 'E'})
+      robot.turnRight()
+      robot.turnRight()
+      robot.turnRight()
+      expect(robot.position).toMatchObject({'x':3, 'y':2, 'orientation': 'N'})
+    })
 
   })
 })

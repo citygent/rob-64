@@ -6,6 +6,7 @@ module.exports = class Robot {
     this.commands = {
       'F': () => this.moveForward(),
       'L': () => this.turnLeft(),
+      'R': () => this.turnRight()
     }
     this.position = this.determinePosition(mission.start)
     this.mission = mission.assignment.split('').filter(Boolean)
@@ -47,8 +48,17 @@ module.exports = class Robot {
       'S': 'E',
       'W': 'S',
     }
-
     this.position.orientation = leftMap[this.position.orientation]
+  }
+
+  turnRight() {
+    const rightMap = {
+      'N': 'E',
+      'E': 'S',
+      'S': 'W',
+      'W': 'N'
+    }
+    this.position.orientation = rightMap[this.position.orientation]
   }
 
   determinePosition(positionString) {
