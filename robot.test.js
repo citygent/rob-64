@@ -55,5 +55,12 @@ describe('Robot', () => {
       expect(robot.position).toMatchObject({'x':3, 'y':2, 'orientation': 'N'})
     })
 
+    it('should be able to follow a sequence of commands', () => {
+      robot = new Robot(expedition.robotMissions[0])
+      expect(robot.position).toMatchObject(
+        { x: 1, y: 1, orientation: "E" }
+      )
+    })
+
   })
 })

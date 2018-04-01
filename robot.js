@@ -1,5 +1,3 @@
-const getCoordinates = require('./helpers').getCoordinates
-
 module.exports = class Robot {
   
   constructor(mission) {
