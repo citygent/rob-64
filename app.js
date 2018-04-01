@@ -5,8 +5,7 @@ module.exports = class Expedition {
   constructor(input) {
     this.instructions = this.getInstructions(input);
     this.planet = this.getPlanet(this.instructions);
-    this.robotMissions = this.getMissions(this.instructions)
-    console.log(this.robotMissions)
+    this.robotMissions = this.getMissions(this.instructions);
   }
 
   getInstructions(input) {

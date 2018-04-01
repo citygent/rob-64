@@ -19,7 +19,7 @@ module.exports = class Robot {
       const validCommand = Object.keys(this.commands).some(command => command === task)
       if (validCommand) {
         this.commands[task]()
-        if (this.robotStillOnline()) {
+        if (this.robotOnTerrain(this.position)) {
           this.lastPosition = this.position
           continue;
         } else {
@@ -31,12 +31,17 @@ module.exports = class Robot {
         }
       }
     }
-    this.output = `${this.lastPosition.x} ${this.lastPosition.y} ${this.lastPosition.orientation} ${this.position.lost ? 'LOST' : ''}`
+    this.output = `${this.lastPosition.x} ${this.lastPosition.y} ${this.lastPosition.orientation} ${this.position.lost ? 'LOST' : ''}`.trim();
   }
 
   moveForward() {
     let { orientation, x, y, lost } = this.position
-
+    let obstacle = this.terrain.obstacles.find(obs => 
+      obs.orientation === orientation &&
+      obs.x === x && 
+      obs.y === y
+    )
+    
     switch (orientation) {
       case 'N':
         y++
@@ -51,7 +56,9 @@ module.exports = class Robot {
         x--
         break;
     }
-    this.position = { orientation, x, y, lost }
+    if (!obstacle) {
+      this.position = { orientation, x, y, lost }
+    }
   }
 
   turnLeft() {
@@ -87,12 +94,4 @@ module.exports = class Robot {
     return (!lostVertically && !lostHorizontally)
   }
 
-  robotStillOnline() {
-    if (this.robotOnTerrain(this.position)) { 
-      return true
-    } else {
-
-      return false
-    }
-  }
 }

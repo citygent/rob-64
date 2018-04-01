@@ -89,6 +89,12 @@ describe('Robot', () => {
       robot.startMission()
       expect(robot.output).toContain("3 3 N LOST")
 
+    })
+    
+    it('An instruction to move “off” the world from a grid point from which a robot has been previously lost is simply ignored by the current robot.', () => {
+      robot.startMission()
+      expect(expedition.planet.gridRows[3][3]).toMatchObject({ lost: true, direction: "N" })
+
       robot2 = new Robot(expedition.robotMissions[2])
       robot2.startMission()
       expect(robot2.output).toEqual("2 3 S")
