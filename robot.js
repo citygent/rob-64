@@ -21,23 +21,25 @@ module.exports = class Robot {
   }
 
   moveForward() {
-    let { orientation, x, y } = this.position
-
-    switch (orientation) {
-      case 'N':
-        y++
-        break;
-      case 'E':
-        x++
-        break;
-      case 'S':
-        y--
-        break;
-      case 'W':
-        x--
-        break;
+    let { orientation, x, y, lost } = this.position
+    if (!lost) {
+      switch (orientation) {
+        case 'N':
+          y++
+          break;
+        case 'E':
+          x++
+          break;
+        case 'S':
+          y--
+          break;
+        case 'W':
+          x--
+          break;
+      }
+      lost = x > this.terrain.maxX || y > this.terrain.maxY
+      this.position = { orientation, x, y, lost }
     }
-    this.position = { orientation, x, y }
   }
 
   turnLeft() {
