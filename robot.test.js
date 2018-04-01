@@ -7,7 +7,7 @@ describe('Robot', () => {
     let expedition, robot
     beforeEach(()=> {
       expedition = new Expedition(sample.input)
-      robot = new Robot(expedition.tasks[0])
+      robot = new Robot(expedition.robotMissions[0])
     })
 
     it('should exist', () => {
@@ -31,7 +31,7 @@ describe('Robot', () => {
     let expedition, robot
     beforeEach(()=> {
       expedition = new Expedition(sample.input)
-      robot = new Robot(expedition.tasks[1])
+      robot = new Robot(expedition.robotMissions[1])
     })
 
     it('should know how to move forward', () => {

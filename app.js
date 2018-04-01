@@ -5,7 +5,7 @@ module.exports = class Expedition {
   constructor(input) {
     this.instructions = this.getInstructions(input);
     this.planet = this.getPlanet(this.instructions);
-    this.tasks = this.getTasks(this.instructions)
+    this.robotMissions = this.getMissions(this.instructions)
   }
 
   getInstructions(input) {
@@ -26,7 +26,7 @@ module.exports = class Expedition {
     return new Planet(maxX, maxY)
   }
 
-  getTasks(instructions) {
+  getMissions(instructions) {
     return instructions.slice(1).reduce((accumulator, value, index, array) => {
       if (index % 2 === 0)
         accumulator.push(array.slice(index, index + 2));

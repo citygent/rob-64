@@ -25,8 +25,8 @@ describe('Expedition', () => {
       expect(expedition.planet).toBeDefined();
     })
 
-    it('should have the correct amount of robot tasks', () => {
-      expect(expedition.tasks.length).toEqual(3);
+    it('should have the correct amount of robot missions', () => {
+      expect(expedition.robotMissions.length).toEqual(3);
     })
   })
 })
